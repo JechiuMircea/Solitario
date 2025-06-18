@@ -42,11 +42,17 @@ python Solitario.py
 --- TAVOLO ---
 [2♥]            [#]             [#]             [#]             [#]             [#]             [#]
                 [7♣]            [#]             [#]             [#]             [#]             [#]
-...
+                                [5♦]            [#]             [#]             [#]             [#]
+                                                [A♠]            [#]             [#]             [#]
+                                                                [K♣]            [#]             [#]
+                                                                                [J♥]            [#]
+                                                                                                [Q♦]
+[#] = Carta Coperta
 
 --- PILE FINALI ---
 ♠: [  ]    ♥: [  ]    ♦: [  ]    ♣: [  ]
-```
+
+
 
 ## Autore
 - Progetto sviluppato da Jechiu Mircea
