@@ -1,21 +1,3 @@
-"""
-SOLITARIO - VERSIONE CON RIMESCOLAMENTO MIGLIORATO
-==================================================
-Questa è una versione refactorizzata di solitario.py con un sistema di rimescolamento più realistico.
-
-NOVITÀ IMPLEMENTATE:
-- Sistema di scarti: le carte non utilizzate vengono messe negli scarti
-- Rimescolamento automatico: quando il mazzo finisce, gli scarti vengono automaticamente rimescolati
-- Rimescolamento manuale: comando [r] per rimescolare gli scarti quando il mazzo è vuoto
-- Comando scarta: comando [sc] per spostare la carta in riserva negli scarti
-- Informazioni dettagliate: mostra il conteggio di mazzo, riserva e scarti
-- Debug scarti: mostra le carte negli scarti (se poche) per controllo
-
-COMANDI AGGIUNTIVI:
-[sc] - Scarta la carta attualmente in riserva (la sposta negli scarti)
-[r]  - Rimescola manualmente gli scarti nel mazzo (solo se mazzo vuoto)
-"""
-
 import random  # Importa il modulo random, usato per mescolare le carte e generare casualità nel gioco
 from colorama import init, Fore, Style  # Importa le funzioni e costanti di colorama per colorare il testo nel terminale
 import re  # Importa il modulo re, usato per le espressioni regolari (ad esempio per rimuovere i codici colore ANSI)
