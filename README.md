@@ -1,5 +1,5 @@
 # Solitario Console
-
+AVVISO IMPORTANTE: Se vedi le colonne delle carte del gioco nel terminale in modo distorto devi semplicemente allargare la finestra del terminale!
 Un gioco del Solitario (Klondike) da terminale, scritto in Python. Permette di giocare con carte colorate e comandi da tastiera, seguendo le regole classiche del solitario.
 
 ## Caratteristiche
