@@ -1,0 +1,4 @@
+colorama
+rich
+pytest
+readchar 

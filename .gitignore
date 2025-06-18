@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv
+
+# Statistiche e log di simulazione
+statistiche_simulazioni/
+statistiche_solitario_*.txt
+log_simulazioni_solitario.txt
+
+# File temporanei e snapshot
+snapshot_*.txt
+*.tmp
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db 

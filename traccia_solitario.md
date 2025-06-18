@@ -1,0 +1,101 @@
+# Solitario
+
+## Task del progetto
+
+**Argomento:** Creazione di un classico gioco di solitario. Il gioco deve essere realizzato in uno dei linguaggi **C#**/**Python** e dovrebbe funzionare completamente nella console.
+
+---
+
+## 1. Descrizione del gioco
+
+Il solitario è un gioco di carte per giocatore singolo in cui l'obiettivo è ordinare tutte le carte per seme e valore in quattro pile finali (dall'asso al re).
+
+### Preparazione del gioco
+
+#### Mazzo
+- Si gioca con un mazzo standard da 52 carte (senza jolly).
+- Le carte hanno quattro semi: cuori (♥), diamanti (♦), picche (♠), e fiori (♣).
+- Ogni seme contiene carte di valore variabile da Asso (A) a Re (K).
+
+#### Disposizione iniziale
+- **Colonne di gioco**
+  - Vengono create 7 colonne, in cui la disposizione delle carte appare come segue:
+    - Prima colonna: 1 carta (scoperta)
+    - Seconda colonna: 2 carte (1 coperta, 1 scoperta)
+    - Terza colonna: 3 carte (2 coperte, 1 scoperta)
+    - …
+    - Settima colonna: 7 carte (6 coperte, 1 scoperta)
+  - Viene rivelata soltanto l'ultima carta di ogni colonna.
+
+- **Pila di riserva**
+  - Il resto delle carte va nella pila di riserva: puoi pescare carte da lì (una carta alla volta, puoi sfogliarle senza limiti).
+
+- **Pile finali**
+  - Quattro spazi vuoti in cui sposti tutte le carte in base al seme – dall'asso al re.
+
+### Gioco
+
+#### Spostare le carte in colonne
+- Puoi spostare le carte che sono in ordine decrescente (K → Q → J … 2 → A).
+- Le carte devono essere posizionate in colori alternati (nero-rosso-nero-rosso).
+- Puoi spostare una singola carta o un'intera sequenza di carte posizionate correttamente.
+
+#### Spostare le carte nelle pile finali
+- Le carte possono essere spostate solo nelle pile finali in ordine dall'asso al re, ad esempio:
+  - A♠ → 2♠ → 3♠ → ... → K♠
+  - A♥ → 2♥ → 3♥ → ... → K♥
+- Ogni pila finale può contenere solo un colore.
+
+#### Rivelare le carte nascoste
+- Quando spostiamo l'ultima carta scoperta da una colonna, viene rivelata la carta coperta sotto di essa.
+- Se una colonna si svuota, è possibile spostare per sostituirla solo con un Re (K) o un'intera sequenza di carte che iniziano con un Re.
+
+#### Pescare carte dal mazzo di riserva
+- Puoi pescare carte dal mazzo:
+  - Si estrae una carta alla volta.
+  - Se il mazzo si svuota, deve essere mescolato e utilizzato nuovamente.
+
+#### Fine del gioco
+- **Vittoria:**
+  - Una volta che tutte le carte sono state posizionate nelle pile finali, dovrebbe apparire la schermata di vincita.
+- **Sconfitta:**
+  - Durante il gioco, dovrebbe esserci un'opzione per terminare il gioco e ricominciare da capo.
+
+---
+
+## 2. Ipotesi di progettazione
+
+- Il gioco del solitario dovrebbe essere implementato secondo le regole descritte.
+- Il progetto deve essere realizzato in uno dei seguenti linguaggi: C#/Python.
+- Il progetto deve essere un'applicazione console: deve essere eseguito in un terminale.
+- Puoi utilizzare qualsiasi libreria per la lingua scelta. Per i progetti Python, tutte le dipendenze devono essere installate utilizzando un gestore di pacchetti, ad es. pip - nella documentazione da includere un file require.txt opportunamente formattato.
+- Ambienti consigliati: i programmi scritti in C# verranno testati in ambienti Visual Studio e Visual Studio Code.
+- Tutti i file di progetto devono essere compressi in un file .zip/.rar e nominati secondo il modello: 16-18_nome_lingua_cognome.
+
+---
+
+## 3. Documentazione
+
+Il progetto deve essere accompagnato da un file README che descriva:
+- Come avviare un progetto, ovvero un elenco di passaggi da eseguire per avviare il progetto.
+- Istruzioni per l'utente del gioco (controlli ecc.)
+- Descrizione delle singole classi, moduli e metodi/funzioni. Questa descrizione può essere sotto forma di commenti nel codice o in un file separato.
+
+---
+
+## 4. Punteggio
+
+- **30 punti** - realizzazione dei presupposti di progettazione (implementazione della meccanica descritta nella parte 1. "Descrizione del gioco")
+- **30 punti** - architettura della soluzione (organizzazione del codice, buone pratiche di programmazione)
+- **20 punti** - livello tecnico del progetto (livello delle tecnologie utilizzate)
+- **15 punti** - creatività, innovazione e aspetto visivo
+- **5 punti** - documentazione, preparata secondo quanto descritto nella parte 3. Documentazione
+
+---
+
+## 5. Suggerimenti
+
+- Un programma che viene eseguito completamente in un terminale significa che il programma viene eseguito dall'inizio alla fine nella finestra della console in cui è stato avviato, senza aprire finestre aggiuntive.
+- La tua priorità dovrebbe essere un programma che funzioni correttamente. È meglio preparare un progetto più piccolo che funzioni senza errori e sia finito piuttosto che uno più vasto con errori/bug o uno che non avrai tempo di finire.
+- Presta attenzione a come vengono codificati i caratteri, a seconda del sistema i caratteri potrebbero essere visualizzati in modo diverso.
+- Ricorda che il codice è il tuo biglietto da visita. Pensa a quando vale la pena utilizzare librerie che hanno implementato determinate operazioni e quando puoi scrivere qualcosa tu stesso e mettere in mostra le tue capacità di programmazione. Un buon codice non è solo un codice che funziona, ma anche un codice pulito ed estetico. Prova a utilizzare gli approcci **SOLID**, **KISS**, **DRY**. 

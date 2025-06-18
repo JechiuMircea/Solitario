@@ -227,6 +227,127 @@ class Finali:
 
 
 # =============================================================================
+# --- Funzioni di controllo Game Over ---
+# =============================================================================
+def controlla_mosse_possibili(tavolo, finali, mazzo, riserva, scarti):
+    """
+    Controlla se ci sono ancora mosse possibili nel gioco.
+    Restituisce True se ci sono mosse possibili, False se è Game Over.
+    
+    Args:
+        tavolo: Istanza della classe Tavolo
+        finali: Istanza della classe Finali  
+        mazzo: Istanza della classe Mazzo
+        riserva: Lista delle carte in riserva
+        scarti: Lista delle carte scartate
+    
+    Returns:
+        bool: True se ci sono mosse possibili, False se Game Over
+    """
+    
+    # --- CONTROLLO 1: Carte disponibili da pescare o rimescolare ---
+    if not mazzo.vuoto():  # Se il mazzo non è vuoto, possiamo sempre pescare
+        return True
+    
+    if scarti:  # Se ci sono scarti, possiamo rimescolare
+        return True
+    
+    if riserva:  # Se c'è una carta in riserva, possiamo scartarla o usarla
+        carta_riserva = riserva[-1]  # Prende l'ultima carta in riserva
+        
+        # Controlla se la carta in riserva può essere spostata alle fondazioni
+        if finali.aggiungi(carta_riserva):  # Prova ad aggiungere (senza modificare realmente)
+            finali.pile[carta_riserva.seme].pop()  # Ripristina lo stato (rimuove la carta appena aggiunta)
+            return True
+        
+        # Controlla se la carta in riserva può essere spostata su qualche colonna
+        for col_idx in range(7):  # Prova tutte le colonne
+            if tavolo.aggiungi_da_mazzo_a_colonna(carta_riserva, col_idx):  # Prova ad aggiungere (simulazione)
+                tavolo.colonne[col_idx].pop()  # Ripristina lo stato (rimuove la carta appena aggiunta)
+                return True
+    
+    # --- CONTROLLO 2: Mosse possibili tra colonne ---
+    for i in range(7):  # Per ogni colonna sorgente
+        colonna_sorgente = tavolo.colonne[i]
+        if not colonna_sorgente or colonna_sorgente[-1].coperta:  # Salta colonne vuote o con carte coperte
+            continue
+            
+        # Prova a spostare 1 carta dalla colonna i a tutte le altre colonne
+        for j in range(7):  # Per ogni colonna destinazione
+            if i != j:  # Non spostare sulla stessa colonna
+                if tavolo.sposta_carte(i, j, 1):  # Prova a spostare 1 carta (simulazione)
+                    # Ripristina lo stato (annulla la mossa)
+                    carta_spostata = tavolo.colonne[j].pop()  # Rimuove la carta dalla destinazione
+                    tavolo.colonne[i].append(carta_spostata)  # La rimette nella sorgente
+                    return True
+        
+        # Prova a spostare sequenze più lunghe (2, 3, 4... carte)
+        max_carte_spostabili = len([carta for carta in colonna_sorgente if not carta.coperta])  # Conta carte scoperte
+        for num_carte in range(2, max_carte_spostabili + 1):  # Prova sequenze di 2+ carte
+            for j in range(7):  # Per ogni colonna destinazione
+                if i != j:  # Non spostare sulla stessa colonna
+                    if tavolo.sposta_carte(i, j, num_carte):  # Prova a spostare num_carte (simulazione)
+                        # Ripristina lo stato (annulla la mossa)
+                        carte_spostate = tavolo.colonne[j][-num_carte:]  # Prende le carte spostate
+                        tavolo.colonne[j] = tavolo.colonne[j][:-num_carte]  # Le rimuove dalla destinazione
+                        tavolo.colonne[i].extend(carte_spostate)  # Le rimette nella sorgente
+                        return True
+    
+    # --- CONTROLLO 3: Mosse possibili verso le fondazioni ---
+    for i in range(7):  # Per ogni colonna
+        colonna = tavolo.colonne[i]
+        if colonna and not colonna[-1].coperta:  # Se la colonna ha carte e l'ultima è scoperta
+            carta = colonna[-1]  # Prende la carta in cima
+            if finali.aggiungi(carta):  # Prova ad aggiungere alle fondazioni (simulazione)
+                finali.pile[carta.seme].pop()  # Ripristina lo stato (rimuove la carta appena aggiunta)
+                return True
+    
+    # --- CONTROLLO 4: Scoprimento di nuove carte ---
+    # Se tutte le carte scoperte non hanno mosse, ma ci sono carte coperte,
+    # potremmo scoprirne di nuove spostando carte scoperte
+    for i in range(7):  # Per ogni colonna
+        colonna = tavolo.colonne[i]
+        if len(colonna) >= 2:  # Se la colonna ha almeno 2 carte
+            if not colonna[-1].coperta and colonna[-2].coperta:  # Ultima scoperta, penultima coperta
+                # Se riusciamo a spostare l'ultima carta, scopriremmo la penultima
+                # Questo è già coperto dai controlli precedenti, ma è importante notarlo
+                pass
+    
+    # Se arriviamo qui, non ci sono mosse possibili
+    return False
+
+def messaggio_game_over(tavolo, finali, mazzo, riserva, scarti):
+    """
+    Genera un messaggio dettagliato per il Game Over.
+    
+    Args:
+        tavolo, finali, mazzo, riserva, scarti: Stato del gioco
+    
+    Returns:
+        str: Messaggio descrittivo del Game Over
+    """
+    carte_nelle_fondazioni = sum(len(finali.pile[seme]) for seme in SEMI)  # Conta carte nelle fondazioni
+    carte_totali_distribuite = 52  # Numero totale di carte nel mazzo
+    percentuale_completamento = (carte_nelle_fondazioni / carte_totali_distribuite) * 100  # Calcola percentuale
+    
+    messaggio = f"""
+╔═══════════════════════════════════════╗
+║               GAME OVER               ║
+╠═══════════════════════════════════════╣
+║ Non ci sono più mosse possibili!      ║
+║                                       ║
+║ Statistiche finali:                   ║
+║ • Carte nelle fondazioni: {carte_nelle_fondazioni:2d}/52       ║
+║ • Completamento: {percentuale_completamento:5.1f}%             ║
+║ • Mazzo: {len(mazzo.carte):2d} carte                    ║
+║ • Riserva: {len(riserva):2d} carte                  ║
+║ • Scarti: {len(scarti):2d} carte                   ║
+╚═══════════════════════════════════════╝
+"""
+    return messaggio
+
+
+# =============================================================================
 # --- Funzione principale ---
 # =============================================================================
 def main():
@@ -250,6 +371,12 @@ def main():
         if finali.vittoria():
             print("Vittoria!")
             break
+        
+        # --- CONTROLLO GAME OVER ---
+        if not controlla_mosse_possibili(tavolo, finali, mazzo, riserva, scarti):
+            print(messaggio_game_over(tavolo, finali, mazzo, riserva, scarti))
+            break
+        
         # --- MOSTRA INFORMAZIONI AGGIUNTIVE ---
         carte_rimaste = mazzo.conta_carte_totali(riserva, scarti)  # Conta tutte le carte disponibili
         print(f"\nCarte disponibili: Mazzo({len(mazzo.carte)}) + Riserva({len(riserva)}) + Scarti({len(scarti)}) = {carte_rimaste}")
