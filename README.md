@@ -49,4 +49,4 @@ python Solitario.py
 ```
 
 ## Autore
-- Progetto sviluppato con l'aiuto di ChatGPT 
+- Progetto sviluppato da Jechiu Mircea
