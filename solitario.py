@@ -178,6 +178,9 @@ class Finali:
             return True
         return False  # Spostamento non possibile
 
+    def vittoria(self):
+        return all(len(self.pile[seme]) == 13 for seme in SEMI)
+
 
 # =============================================================================
 # --- Funzione principale ---
@@ -199,6 +202,10 @@ def main():
         if messaggio:  # Se c'è un messaggio da mostrare
             print(messaggio)
             messaggio = ""  # Pulisce il messaggio dopo averlo mostrato
+        # --- CONTROLLO VITTORIA ---
+        if finali.vittoria():
+            print("Vittoria!")
+            break
         print("\nComandi: [p] Pesca  [s] Sposta  [f] Sposta verso finali  [m] da Mazzo a colonne  [mf] da Mazzo a finali  [q] Esci")
         cmd = input("Comando: ").strip().lower()  # Chiede il comando all'utente
 
