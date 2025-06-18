@@ -1,29 +1,11 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv
+# Ignora tutto
+*
 
-# Statistiche e log di simulazione
-statistiche_simulazioni/
-statistiche_solitario_*.txt
-log_simulazioni_solitario.txt
+# Ma NON ignorare questi file specifici
+!.gitignore
+!solitario.py
+!README.md
+!requirements.txt
 
-# File temporanei e snapshot
-snapshot_*.txt
-*.tmp
-*.log
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db 
+# Non ignorare le directory (per permettere la navigazione)
+!*/ 
