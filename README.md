@@ -44,7 +44,7 @@ Un gioco del Solitario (Klondike) da terminale, scritto in Python con **sistema 
 ## Avvio del gioco
 Esegui il file principale:
 ```bash
-python Solitario.py
+python src/solitario.py
 ```
 
 ## 🎯 Comandi di gioco
